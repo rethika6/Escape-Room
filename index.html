@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Escape Room Game</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+</head>
+<body>
+    <a-scene background="color: white">
+        <a-entity environment="preset: forest; dressingAmount: 100"></a-entity>
+        
+        <!-- Floor -->
+        <a-plane  position="0 0.09 0" rotation="-90 0 0" width="16" height="16" repeat="4 2" color="#A36846"></a-plane>
+
+        <!-- Walls -->
+        <a-box position="0 0.3 -8" rotation="0 0 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
+        <a-box position="8 0.3 0" rotation="0 90 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
+        <a-box position="0 0.3 8" rotation="0 0 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
+        <a-box position="-8 0.3 0" rotation="0 90 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
+
+        <!-- Door -->
+        <a-box position="0 0.3 -7.99" rotation="0 0 0" scale="1.5 4.5 0.2" color="#6E260E"></a-box>
+        <a-sphere position= "-.5 1.15 -7.9" color="yellow" radius="0.1" radius="5"></a-sphere>
+
+        <!-- Ceiling -->
+        <a-plane position="0 6 0" rotation="90 0 0" width="16" height="16" repeat="4 2" color="#a1a1a1"></a-plane>
+
+        <!-- Ambient Light -->
+        <a-light type="ambient" color="#888" intensity="0.8"></a-light>
+
+        <!-- Point Lights -->
+        <a-light type="point" color="#888" intensity="0.25" position="7 5.8 7"></a-light>
+        <a-light type="point" color="#888" intensity="0.25" position="7 5.8 -7"></a-light>
+        <a-light type="point" color="#888" intensity="0.25" position="-7 5.8 -7"></a-light>
+        <a-light type="point" color="#888" intensity="0.25" position="-7 5.8 7"></a-light>
+
+        <!-- Text box background plane -->
+        <a-plane rotation="0 0 0" width="3.3" height="2" position="0 1.95 -4" repeat="4 2" color="black"></a-plane>    
+        <!-- Text boxes -->
+        <a-text value="Overview:
+
+        Click and drag to look around, and use the WASD keys to move around the room.
+        
+        You just woke up in your room and realized someone locked you inside. In order to get out, you have to follow clues to find keys that will unlock the door. You will have a limited amount of time to find each key.
+        
+        To get started press the space button." color="white" width="3" height="4" position="-1.5 2 -4" ></a-text>
+ 
+    </a-scene>
+</body>
+</html>
