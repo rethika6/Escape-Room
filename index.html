@@ -5,13 +5,78 @@
     <title>Escape Room Game</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script>
+        AFRAME.registerComponent('timer', {
+            init: function () {
+                var el = this.el;
+                var initialTime = 5 * 60; // 5 minutes in seconds
+
+                function updateTimer() {
+                    var minutes = Math.floor(initialTime / 60);
+                    var seconds = initialTime % 60;
+                    var formattedTime = ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+
+                    el.setAttribute('text', 'value', formattedTime);
+
+                    if (initialTime > 0) {
+                        initialTime--;
+                        setTimeout(updateTimer, 1000);
+                    } else {
+                        // Timer reached 0, implement your logic here
+                        console.log('Time is up!');
+                    }
+                }
+
+                // Start the timer when the space bar is pressed
+                var startTimer = function () {
+                    updateTimer();
+                };
+
+                document.addEventListener('keydown', function (event) {
+                    if (event.code === 'Space') {
+                        // Start the timer
+                        startTimer();
+                    }
+                });
+            }
+        });
+        AFRAME.registerComponent('change-text', {
+            init: function () {
+                var el = this.el;
+
+                document.addEventListener('keydown', function (event) {
+                    if (event.code === 'Space') {
+                        // Change the text of the introduction box
+                        var introBox = document.getElementById('intro-box');
+                        introBox.setAttribute('text', 'value', "To unravel the secrets veiled in art, gaze upon painting, and play your part. Her enigmatic smile hides a key, seek the brushstrokes, and you will see. In shadows deep, where colors blend, a message waits for you to send. When time stands still and the room falls hush, decode the masterpiece with a patient touch. Let your eyes dance on her painted grace, and you'll find the key to unlock the next space.");
+                    }
+                });
+            }
+        });
+        AFRAME.registerComponent('rotate-on-click', {
+            init: function () {
+                var el = this.el;
+
+                // Add click event listener to the painting
+                el.addEventListener('click', function () {
+                    // Move the painting back behind the wall
+                    var currentRotation = el.getAttribute('rotation');
+                    el.setAttribute('rotation', {
+                        x: currentRotation.x ,
+                        y: currentRotation.y,
+                        z: currentRotation.z - 90
+                    });
+                });
+            }
+        });
+    </script>    
 </head>
 <body>
     <a-scene background="color: white">
         <a-entity environment="preset: forest; dressingAmount: 100"></a-entity>
         
         <!-- Floor -->
-        <a-plane  position="0 0.09 0" rotation="-90 0 0" width="16" height="16" repeat="4 2" color="#A36846"></a-plane>
+        <a-plane position="0 0.09 0" rotation="-90 0 0" width="16" height="16" repeat="4 2" color="#A36846"></a-plane>
 
         <!-- Walls -->
         <a-box position="0 0.3 -8" rotation="0 0 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
@@ -37,14 +102,55 @@
 
         <!-- Text box background plane -->
         <a-plane rotation="0 0 0" width="3.3" height="2" position="0 1.95 -4" repeat="4 2" color="black"></a-plane>    
-        <!-- Text boxes -->
-        <a-text value="Overview:
-
+        <!-- Introduction box -->
+        <a-text value="Introduction:
+        
+        You just woke up in your room and realized someone locked you inside. 
+        In order to get out, you have to follow clues to find keys that will unlock the door. 
+        Make sure you work fast before time runs out.
         Click and drag to look around, and use the WASD keys to move around the room.
+        To get started press the space button." color="white" width="3" height="4" position="-1.5 2 -4" change-text></a-text>
+
+        <!-- A-Frame Bed -->
+       <a-entity position="0 0.2 5.5" rotation="0 180 0">
+
+        <!-- Bed Frame -->
+        <a-box width="4" height="0.2" depth="4" color="#8B4513"></a-box>
+
+        <!-- Headboard -->
+        <a-box width="4" height="2" depth="0.2" position="0 0 -2" color="#8B4513"></a-box>
+
+        <!-- Mattress -->
+        <a-box width="3.5" height="0.4" depth="3.5" position="0 0.1 0" color="#6495ED"></a-box>
+
+        <!-- Pillows -->
+        <a-entity position="0.8 0.25 -1.5">
+        <a-box width="1.5" height="0.3" depth="0.5" color="#FFD700"></a-box>
+        </a-entity>
+        <a-entity position="-0.8 0.25 -1.5">
+        <a-box width="1.5" height="0.3" depth="0.5" color="#FFD700"></a-box>
+        </a-entity>
+        </a-entity>
+
+        <!-- Mona Lisa Painting on the wall -->
+        <a-plane position="-7.5 3 .5" rotation="0 90 0" width="2" height="4" color="white" src="Leonardo_da_Vinci_-_Mona_Lisa.jpg" rotate-on-click></a-plane>
+
+        <!-- Key on the wall -->
+        <a-plane position="-7.89 4.5 0" rotation="0 90 0" width="1" height=".5" src="key.png"></a-plane>
+
+        <!-- Flower Painting on the wall -->
+        <a-plane position="-7.89 3 5" rotation="0 90 0" width="2" height="4" color="white" src="flowerpainting.jpg" rotate-on-click></a-plane>
+
         
-        You just woke up in your room and realized someone locked you inside. In order to get out, you have to follow clues to find keys that will unlock the door. You will have a limited amount of time to find each key.
-        
-        To get started press the space button." color="white" width="3" height="4" position="-1.5 2 -4" ></a-text>
+        <!-- Van Gogh Painting on the wall -->
+        <a-plane position="-7.89 3 -4" rotation="0 90 0" width="2" height="4" color="white" src="vangoghmuseum-s0016V1962-800.jpg" rotate-on-click></a-plane>
+         <!-- Timer -->
+         <a-entity id="timer" position="-1.5 2 -4" text="value: 05:00; color: white; width: 3; height: 4;"></a-entity>
+
+        <!-- Camera with wasd-controls -->
+        <a-entity camera look-controls wasd-controls="acceleration: 300" position="0 1.6 0">
+            <a-cursor></a-cursor>
+        </a-entity>
  
     </a-scene>
 </body>
