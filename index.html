@@ -134,6 +134,7 @@
 
                 // Boolean variable to track light status
                 let isLightOn = false;
+                lightSource.setAttribute('light', 'intensity', 0);
 
                 // Function to toggle the light
                 const toggleLight = () => {
@@ -142,7 +143,7 @@
                         lightSource.setAttribute('light', 'intensity', 0);
                     } else {
                         // Turn on the light
-                        lightSource.setAttribute('light', 'intensity', 0.4);
+                        lightSource.setAttribute('light', 'intensity', 0.9);
                     }
                     // Invert the light status
                     isLightOn = !isLightOn;
@@ -267,9 +268,31 @@
             <a-cone position="-3 2 7" radius-bottom="0.5" radius-top="0" height="1" color="white"></a-cone>
              
             <!-- Light Source (Sphere) -->
-            <a-sphere id="light-source" position="-3 2.5 7" radius="0.2" color="yellow" light="type: point; intensity: 0.4;"></a-sphere>
+            <a-sphere id="light-source" position="-3 2.5 7" radius="0.2" color="blue" light="type: point; intensity: 0.9; color: blue"></a-sphere>
         </a-entity>
 
+        <!DOCTYPE html>
+
+        <a-entity position="7 0.35 2">
+            <!-- Main box -->
+            <a-box width="1" height="0.4" depth="0.8" color="red" rotation="0 90 0"></a-box>
+          
+            <!-- Small door -->
+            <a-box width="0.05" height="0.3" depth="0.8" color="red" position="9 2 1"></a-box>
+          </a-entity>
+          
+          <a-entity position="7 -0.05 2">
+            <!-- Main box -->
+            <a-box width="1" height="0.4" depth="0.8" color="brown" rotation="0 90 0"></a-box>
+          
+            <!-- Small door -->
+            <a-box width="0.05" height="0.3" depth="0.8" color="brown" position="9 2 1"></a-box>
+          </a-entity>
+
+           <!-- Rectangle -->
+           <a-plane position="4.6 0.72 1.4" rotation="180 90 0" width="0.6" height="0.25" depth="0.2" color="black"></a-plane>
+
+           <a-cylinder position="4.6 0.72 1.4" rotation="0 70 0" radius="0.04" height="0.2" color="#FFED8A"></a-cylinder>
 
 
     </a-scene>
