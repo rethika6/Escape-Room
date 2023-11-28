@@ -177,6 +177,43 @@
             }
     });
 
+    AFRAME.registerComponent('safebox', {
+  init: function () {
+    var el = this.el;
+    var display = document.querySelector('a-text');
+    var code = "1428";
+    var currentInput = "";
+    var door = el.querySelector('#safeDoor');
+    var keypad = el.querySelector('#keypad');
+
+    el.addEventListener('click', function (event) {
+      if (event.target.tagName === 'A-ENTITY') {
+        currentInput += event.target.getAttribute('text').value;
+        display.setAttribute('value', currentInput);
+
+        if (currentInput.length === 4) {
+          if (currentInput === code) {
+            openSafeDoor();
+            alert("Safe unlocked and key found! Go back to start for next clue!");
+            introBox.setAttribute('text', 'value', "congrats on finding the first key! you sure have Won the lottery. To the safe where the next clue lies. you will need to escape, beFore time runs out. Or else it will be Too lAte!");
+          } else {
+            alert("Incorrect code. Safe remains locked.");
+          }
+          currentInput = "";
+          display.setAttribute('value', "Third clue that leads to lamp");
+        }
+      }
+    });
+    function openSafeDoor() {
+      // Rotate the door and buttons
+      door.setAttribute('rotation', '0 90 0');
+      keypad.setAttribute('rotation', '0 90 0');
+      door.setAttribute('position', (door.getAttribute('position').x - .85) + ' ' + door.getAttribute('position').y + ' ' + (door.getAttribute('position').z - .3));
+      keypad.setAttribute('position', (keypad.getAttribute('position').x  - .55) + ' ' + keypad.getAttribute('position').y + ' ' + (keypad.getAttribute('position').z));
+    }
+  }
+});
+
     </script>    
     </head>
     <body>
@@ -313,6 +350,40 @@
         <a-cylinder position="7.28 0.90 5.25" rotation="90 90 0" radius="0.04" height="0.2" color="#FFED8A"></a-cylinder>
         <a-cylinder position="7.28 0.55 5.25" rotation="90 90 0" radius="0.04" height="0.2" color="#FFED8A"></a-cylinder>
         <a-cylinder position="7.28 0.20 5.25" rotation="90 90 0" radius="0.04" height="0.2" color="#FFED8A"></a-cylinder>
+
+        <!-- Safe -->
+        <a-entity id =safebox safebox>
+            <a-box position="3 0.75 7" width="1.5" height="2" depth="1" color="gray"></a-box>
+           <!-- inside -->
+           <a-box position="3 0.75 6.55" width="1" height="1.5" depth=".2" color="black"></a-box>
+           <!-- key inside safe -->
+           <a-plane position="3 1 6.4" rotation="0 0 90" width="1" height=".5" src="key.png"></a-plane>
+
+           <!-- safe door -->
+           <a-box id="safeDoor" position="3 .75 6.4" width="1.5" height="2" depth=".1" color="gray"></a-box>
+
+
+           <!-- Display -->
+           <a-text value="" width="2" color="black"></a-text>
+
+           <a-entity id="keypad" position="2.6 1.5 6.3">
+               <a-entity id="button3" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 1" position="0.8 0 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button2" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 2" position="0.4 0 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button1" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 3" position="0 0 0"event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button6" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 4" position="0.8 -0.4 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button5" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 5" position="0.4 -0.4 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button4" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 6" position="0 -0.4 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button9" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 7" position="0.8 -0.8 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button8" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 8" position="0.4 -0.8 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button7" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 9" position="0 -0.8 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+               <a-entity id="button0" geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.05" material="color: white" text="value: 0" position=".4 -1.2 0" event-set__1="_event: mousedown; scale: 0.9 0.9 0.9"></a-entity>
+           </a-entity>
+           
+
+           <!-- Event listeners to handle button clicks -->
+           <a-entity id="scene" safebox></a-entity>
+        </a-entity>
+
 
 
     </a-scene>
