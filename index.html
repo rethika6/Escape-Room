@@ -15,8 +15,6 @@
             var interval;
 
             var camera = document.querySelector('[camera]');
-            camera.removeAttribute('look-controls');
-            camera.removeAttribute('wasd-controls');
 
             function updateTimer() {
                 var minutes = Math.floor(initialTime / 60);
@@ -31,21 +29,13 @@
                     timerText.setAttribute('text', 'value', 'Time is up!');
                     timerText.setAttribute('text', 'color', 'red');
 
-                    // attempts to create a "you lose" screen
                     var scene = document.querySelector('a-scene');
-                    //scene.setAttribute('background', 'color: black');
-                    //scene.setAttribute('environment', 'preset', 'black');
-                    showEndMessage();
-                    camera.removeAttribute('look-controls');
-                    camera.removeAttribute('wasd-controls');
-                    // var scene = document.querySelector('a-scene');
-                    //scene.setAttribute('environment', 'preset', 'white');
-                    // var scene = document.querySelector('a-scene');
-                    // var camera = document.querySelector('[camera]');
 
+                    showEndMessage();
                     // Disabling camera controls after time is up
                     camera.removeAttribute('look-controls');
-                    camera.removeAttribute('wasd-controls');                   
+                    camera.removeAttribute('wasd-controls');   
+                                    
                 }
             }
 
@@ -113,21 +103,6 @@
                     introBox.setAttribute('text', 'value', "congrats on finding the first key! you sure have Won the lottery. to the safe where the next clue lies. you will need to escape, beFore time runs out. Or else it will be Too lAte!");
                 }
             });
-
-            function showText() {
-                var text = document.createElement('a-entity');
-                text.setAttribute('text', {
-                    value: 'You found the first key! Go back to the start for your next clue!',
-                    color: 'white',
-                    align: 'center',
-                    width: 3
-                })
-                var camera = document.querySelector('[camera]');
-                var cameraPosition = camera.getAttribute('position');
-                text.setAttribute('position', '-7.5 3 .5'); // Adjust position as needed
-                text.setAttribute('rotation', '0 90 0');
-                document.querySelector('a-scene').appendChild(text);
-            }
         }
     });
 
@@ -182,9 +157,6 @@
             }
     });
 
-  
-    
-
     AFRAME.registerComponent('safebox', {
         init: function () {
             var el = this.el;
@@ -201,7 +173,7 @@
         if (currentInput.length === 4) {
           if (currentInput === code) {
             openSafeDoor();
-            alert("Safe unlocked and key found! Go back to start for next clue!");
+            alert("Safe unlocked and key found! Go back to the desk for your next clue!");
             display.setAttribute('value', '"It may be that you are not yourself luminous, but that you are a conductor of light. Some people without possessing genius have a remarkable power of stimulating it" - Sherlock Holmes');
           } else {
             alert("Incorrect code. Safe remains locked.");
@@ -274,6 +246,8 @@ AFRAME.registerComponent('bookshelf', {
         <a-light type="point" color="#888" intensity="0.25" position="-7 5.8 -7"></a-light>
         <a-light type="point" color="#888" intensity="0.25" position="-7 5.8 7"></a-light>
 
+        <!-- Intro objects -->
+        <a-entity id="box" position="3.8 0 -4.6" rotation="0 -90 0">
         <!-- Text box background plane -->
         <a-plane id="textBox" rotation="0 0 0" width="3.3" height="2" position="0 1.95 -4" repeat="4 2" color="black"></a-plane>    
         <!-- Introduction box -->
@@ -284,6 +258,11 @@ AFRAME.registerComponent('bookshelf', {
         Make sure you work fast before time runs out.
         Click and drag to look around, and use the WASD keys to move around the room.
         To get started press the space button." color="white" width="3" height="4" position="-1.5 2 -4" change-text></a-text>
+
+        <!-- Timer -->
+        <a-text value="Timer:" color="black" width="3" height="4" position="-0.5 3.2 -4"></a-text>
+        <a-entity id="timerText" position="1.4 3.2 -4" text="value: 05:00; color: black; width: 3; height: 4;" timer></a-entity>
+        </a-entity>
 
         <!-- A-Frame Bed -->
        <a-entity position="0 0.2 5.5" rotation="0 180 0">
@@ -326,13 +305,6 @@ AFRAME.registerComponent('bookshelf', {
 
         <!-- Starry Night painting above the desk -->
         <a-plane position="7.88 2.75 0" rotation = "0 -90 0" width="3.2" height="2.2" color="white" src="starry-night.jpg" rotate-on-click></a-plane>
-
-
-
-        
-        <!-- Timer -->
-        <a-text value="Timer:" color="black" width="3" height="4" position="-0.5 3.2 -4"></a-text>
-        <a-entity id="timerText" position="1.4 3.2 -4" text="value: 05:00; color: black; width: 3; height: 4;" timer></a-entity>
         
         <!-- Camera with wasd-controls -->
         <a-entity id='camera' camera look-controls wasd-controls="acceleration: 50" position="0 1.6 0" timer>
