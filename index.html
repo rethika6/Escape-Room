@@ -182,6 +182,9 @@
             }
     });
 
+  
+    
+
     AFRAME.registerComponent('safebox', {
         init: function () {
             var el = this.el;
@@ -217,6 +220,29 @@
   }
 });
 
+AFRAME.registerComponent('bookshelf', {
+    init: function () {
+        // Get references to the door and the blue book
+        const door = document.querySelector("#door");
+        const blueBook = document.querySelector("#blueBook");
+        const textBox = document.querySelector("#textBox");
+
+
+        // Event listener for click on the blue book
+        blueBook.addEventListener("click", () => {
+        // Open the door by changing its rotation when the blue book is clicked
+        door.setAttribute("animation", {
+            property: "rotation",
+            to: "0 90 0",
+            dur: 1000 // Adjust the duration as needed
+      });
+      textBox.parentNode.removeChild(textBox);
+
+    });
+    
+  }
+});
+
     </script>    
     </head>
     <body>
@@ -233,7 +259,7 @@
         <a-box position="-8 0.3 0" rotation="0 90 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
 
         <!-- Door -->
-        <a-box position="0 0.3 -7.99" rotation="0 0 0" scale="1.5 4.5 0.2" color="#6E260E"></a-box>
+        <a-box id="door" position="0 0.3 -7.99" rotation="0 0 0" scale="1.5 4.5 0.2" color="#6E260E"></a-box>
         <a-sphere position= "-.5 1.15 -7.9" color="yellow" radius="0.1" radius="5"></a-sphere>
 
         <!-- Ceiling -->
@@ -249,7 +275,7 @@
         <a-light type="point" color="#888" intensity="0.25" position="-7 5.8 7"></a-light>
 
         <!-- Text box background plane -->
-        <a-plane rotation="0 0 0" width="3.3" height="2" position="0 1.95 -4" repeat="4 2" color="black"></a-plane>    
+        <a-plane id="textBox" rotation="0 0 0" width="3.3" height="2" position="0 1.95 -4" repeat="4 2" color="black"></a-plane>    
         <!-- Introduction box -->
         <a-text id="introBox" value="Introduction:
         
@@ -425,6 +451,38 @@
         <a-box position="7.25 0.25 0" rotation="0 90 0" width="0.05" height="0.5" depth="0.05" color="#8B4513"></a-box>
         <a-box position="6.73 0.25 0.5" rotation="0 90 0" width="0.05" height="0.5" depth="0.05" color="#8B4513"></a-box>
         <a-box position="6.73 0.25 0" rotation="0 90 0" width="0.05" height="0.5" depth="0.05" color="#8B4513"></a-box>
+
+
+    
+        <!-- Back panel of the bookshelf (mirrored) -->
+        <a-plane position="-5 1.3 7" rotation="0 180 0" width="1.5" height="4" color="#8B4513"></a-plane>
+            
+        
+        <!-- Left side of the bookshelf -->
+        <a-box  position =  "-3.7 1.28 6" rotation ="90 10 10" width="0.1" height="0.5" depth= "3.55" color="#8B4513"></a-box>
+
+        <!-- Right side of the bookshelf -->
+        <a-box position="-5 1.28 6" rotation="90 -10 10" width="0.1" height="0.5" depth="3.55" color="#8B4513"></a-box>
+        <!-- Top side of the bookshelf -->
+        <a-box position="-4.3 3 6" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+        <!-- Bottom of the bookshelf -->
+        <a-box position="-4.3 0.1 6" rotation="0 90 0" width="0.5" height="0.4" depth="1.3" color="#8B4513"></a-box>
+
+        <!-- Shelves -->
+        <!-- First Shelf -->
+        <a-box position="-4.3 1 6" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+
+  
+        <!-- Second Shelf -->
+        <a-box position="-4.3 2 6" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+
+        <!--  Blue Book -->
+        <a-box id="blueBook" position="-4.1 2.3 6" rotation="10 90 0" width="0.08" height="0.4" depth="0.1" color="blue"></a-box>
+
+  
+ 
+
+
 
     </a-scene>
 </body>
