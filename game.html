@@ -6,6 +6,9 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
     <script>
+        key1Found = false;
+        key2Found = false;
+        key3Found = false;
 
         AFRAME.registerComponent('timer', {
             init: function () {
@@ -26,15 +29,16 @@
                     initialTime--;
                 } else {
                     clearInterval(interval);
-                    timerText.setAttribute('text', 'value', 'Time is up!');
-                    timerText.setAttribute('text', 'color', 'red');
+                    window.location.href = 'ohno.html';
+                    //timerText.setAttribute('text', 'value', 'Time is up!');
+                    //timerText.setAttribute('text', 'color', 'red');
 
-                    var scene = document.querySelector('a-scene');
+                    //var scene = document.querySelector('a-scene');
 
-                    showEndMessage();
+                    //showEndMessage();
                     // Disabling camera controls after time is up
-                    camera.removeAttribute('look-controls');
-                    camera.removeAttribute('wasd-controls');   
+                    //camera.removeAttribute('look-controls');
+                    //camera.removeAttribute('wasd-controls');   
                                     
                 }
             }
@@ -99,8 +103,8 @@
 
                 // Check if the rotation reaches the threshold
                 if (paintingId === 'monaLisa' && newRotation <= rotationThreshold) {
-                    showText();
                     introBox.setAttribute('text', 'value', "congrats on finding the first key! you sure have Won the lottery. to the safe where the next clue lies. you will need to escape, beFore time runs out. Or else it will be Too lAte!");
+                    key1Found = true;
                 }
             });
         }
@@ -175,6 +179,8 @@
             openSafeDoor();
             alert("Safe unlocked and key found! Go back to the desk for your next clue!");
             display.setAttribute('value', '"It may be that you are not yourself luminous, but that you are a conductor of light. Some people without possessing genius have a remarkable power of stimulating it" - Sherlock Holmes');
+            el.sceneEl.setAttribute('key2Found', true);
+            key2Found = true;
           } else {
             alert("Incorrect code. Safe remains locked.");
           }
@@ -194,26 +200,37 @@
 
 AFRAME.registerComponent('bookshelf', {
     init: function () {
-        // Get references to the door and the blue book
-        const door = document.querySelector("#door");
-        const blueBook = document.querySelector("#blueBook");
-        const textBox = document.querySelector("#textBox");
+        var el = this.el;
+        var door = el.querySelector('#door');
+        var GOTBook = el.querySelector('#GOTBook');
 
-
-        // Event listener for click on the blue book
-        blueBook.addEventListener("click", () => {
-        // Open the door by changing its rotation when the blue book is clicked
-        door.setAttribute("animation", {
-            property: "rotation",
-            to: "0 90 0",
-            dur: 1000 // Adjust the duration as needed
-      });
-      textBox.parentNode.removeChild(textBox);
-
-    });
-    
-  }
+        // Click event listener on the book
+        GOTBook.addEventListener('click', function (event) {
+            //openMainDoor();
+            alert("You found another key congrats!");
+            GOTBook.setAttribute('visible', false);
+            el.sceneEl.setAttribute('key3Found', true);
+            key3Found = true;
+        });
+    }
 });
+
+AFRAME.registerComponent('clickable', {
+    schema: {
+        keys: { type: 'array' }
+    },
+    init: function () {
+        this.el.addEventListener('click', () => this.checkKeys());
+    },
+    checkKeys: function () {
+        if(key1Found && key2Found && key3Found) {
+            window.location.href = 'congrats.html';
+        } else {
+            alert("You have not found all the keys yet!");
+        }
+    }
+});
+
 
     </script>    
     </head>
@@ -230,10 +247,7 @@ AFRAME.registerComponent('bookshelf', {
         <a-box position="0 0.3 8" rotation="0 0 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
         <a-box position="-8 0.3 0" rotation="0 90 0" scale="16 12 0.2" color="#a1a1a1"></a-box>
 
-        <!-- Door -->
-        <a-box id="door" position="0 0.3 -7.99" rotation="0 0 0" scale="1.5 4.5 0.2" color="#6E260E"></a-box>
-        <a-sphere position= "-.5 1.15 -7.9" color="yellow" radius="0.1" radius="5"></a-sphere>
-
+        
         <!-- Ceiling -->
         <a-plane position="0 6 0" rotation="90 0 0" width="16" height="16" repeat="4 2" color="#a1a1a1"></a-plane>
 
@@ -253,10 +267,10 @@ AFRAME.registerComponent('bookshelf', {
         <!-- Introduction box -->
         <a-text id="introBox" value="Introduction:
         
-        You just woke up in your room and realized someone locked you inside. 
-        In order to get out, you have to follow clues to find keys that will unlock the door. 
-        Make sure you work fast before time runs out.
-        Click and drag to look around, and use the WASD keys to move around the room.
+        You are locked in the proffessor's study. In order to get out, you have to follow clues 
+        to find keys that will unlock the door. Make sure you work fast before time runs out.
+        Click and drag to look around, and use the WASD or arrow keys to move around the room. 
+        When you have found all THREE keys click on the door to escape.
         To get started press the space button." color="white" width="3" height="4" position="-1.5 2 -4" change-text></a-text>
 
         <!-- Timer -->
@@ -286,7 +300,9 @@ AFRAME.registerComponent('bookshelf', {
         </a-entity>
 
         <!-- Mona Lisa Painting on the wall -->
-        <a-plane position="-7.88 3 .5" rotation="0 90 0" width="2" height="4" color="white" src="Leonardo_da_Vinci_-_Mona_Lisa.jpg" rotate-on-click="paintingId: monaLisa"></a-plane>
+        <a-plane position="-7.88 3 .5" rotation="0 90 0" width="2" height="4" color="white" src="Leonardo_da_Vinci_-_Mona_Lisa.jpg" rotate-on-click="paintingId: monaLisa">
+            <a-entity event-set__click="key1Found: true"></a-entity>
+        </a-plane>
 
         <!-- Key on the wall -->
         <a-plane position="-7.89 4.5 0" rotation="0 90 0" width="1" height=".5" src="newKey.png"></a-plane>
@@ -426,36 +442,49 @@ AFRAME.registerComponent('bookshelf', {
 
 
     
-        <!-- Back panel of the bookshelf (mirrored) -->
-        <a-plane position="-5 1.3 7" rotation="0 180 0" width="1.5" height="4" color="#8B4513"></a-plane>
-            
+        <a-entity id="bookshelf" bookshelf>
+
+            <!-- Back panel of the bookshelf (mirrored) -->
+            <a-plane position="-4 0.3 -7.8" rotation="0 0 0" width="1.5" height="4" color="#8B4513"></a-plane>
         
-        <!-- Left side of the bookshelf -->
-        <a-box  position =  "-3.7 1.28 6" rotation ="90 10 10" width="0.1" height="0.5" depth= "3.55" color="#8B4513"></a-box>
+            <!-- Left side of the bookshelf -->
+            <a-box position="-4.75 0.3 -7.7" rotation="90 10 10" width="0.1" height="0.5" depth="4" color="#8B4513"></a-box>
+        
+            <!-- Right side of the bookshelf -->
+            <a-box position="-3.25 0.3 -7.7" rotation="90 -10 10" width="0.1" height="0.5" depth="4" color="#8B4513"></a-box>
+        
+            <!-- Top of the bookshelf -->
+            <a-box position="-4 2.25 -7.7" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+        
+            <!-- First shelf of the bookshelf -->
+            <a-box position="-4 1.75 -7.7" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+        
+            <!-- Second shelf of the bookshelf -->
+            <a-box position="-4 1 -7.7" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+        
+            <!-- Bottom of bookshelf -->
+            <a-box position="-4 0.1 -7.7" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
+        
+            <!-- Game of Thrones Book -->
+            <a-image id="GOTBook" src="gameOfThronesBook.jpeg" position="-4 1.3 -7.7" rotation="0 0 0" width="0.3" height="0.5">
+        
+                <a-entity event-set__click="key3Found: true"></a-entity>
+        
+            </a-image>
 
-        <!-- Right side of the bookshelf -->
-        <a-box position="-5 1.28 6" rotation="90 -10 10" width="0.1" height="0.5" depth="3.55" color="#8B4513"></a-box>
-        <!-- Top side of the bookshelf -->
-        <a-box position="-4.3 3 6" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
-        <!-- Bottom of the bookshelf -->
-        <a-box position="-4.3 0.1 6" rotation="0 90 0" width="0.5" height="0.4" depth="1.3" color="#8B4513"></a-box>
-
-        <!-- Shelves -->
-        <!-- First Shelf -->
-        <a-box position="-4.3 1 6" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
-
-  
-        <!-- Second Shelf -->
-        <a-box position="-4.3 2 6" rotation="0 90 0" width="0.5" height="0.1" depth="1.3" color="#8B4513"></a-box>
-
-        <!--  Blue Book -->
-        <a-box id="blueBook" position="-4.1 2.3 6" rotation="10 90 0" width="0.08" height="0.4" depth="0.1" color="blue"></a-box>
-
-  
- 
-
-
-
+            <a-plane position="-4 1.3 -7.7" rotation="0 0 0" width=".3" height=".5" src="bookshelfKey.png"></a-plane>
+        
+            <!-- Door -->
+            <a-box id="door" position="0 0.3 -7.99" rotation="0 0 0" scale="1.5 4.5 0.2" color="#6E260E" clickable="keys: key1Found key2Found key3Found">
+                <a-entity
+                    event-set__doorclick="_event: click; _target: #door"
+                    event-set__doorunclick="_event: unclick; _target: #door; _attribute: material.color; value: #6E260E"
+                    event-set__doorclick="__alert: keys not found">
+                </a-entity>
+            </a-box>
+            <a-sphere id="knob" position="-0.5 1.15 -7.9" color="yellow" radius="0.1"></a-sphere>
+        
+        </a-entity>
     </a-scene>
 </body>
 </html>
