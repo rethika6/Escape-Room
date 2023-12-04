@@ -73,6 +73,7 @@
                 var el = this.el;
                 var rotationThreshold = -90; // Define the rotation threshold
                 var paintingId = this.data.paintingId;
+                var success = document.getElementById('success');
 
                 // Add click event listener to the painting
                 el.addEventListener('click', function () {
@@ -88,6 +89,7 @@
 
                     // Check if the rotation reaches the threshold
                     if (paintingId === 'monaLisa' && newRotation <= rotationThreshold) {
+                        success.play();
                         introBox.setAttribute('text', 'value', "congrats on finding the first key! you sure have Won the lottery. to the safe where the next clue lies. you will need to escape, beFore time runs out. Or else it will be Too lAte!");
                         key1Found = true;
                     }
@@ -154,6 +156,7 @@
                 var currentInput = "";
                 var door = el.querySelector('#safeDoor');
                 var keypad = el.querySelector('#keypad');
+                var success = document.getElementById('success');
 
                 el.addEventListener('click', function (event) {
                     if (event.target.tagName === 'A-ENTITY') {
@@ -166,6 +169,7 @@
                                 display.setAttribute('value', '"It may be that you are not yourself luminous, but that you are a conductor of light. Some people without possessing genius have a remarkable power of stimulating it" - Sherlock Holmes');
                                 el.sceneEl.setAttribute('key2Found', true);
                                 key2Found = true;
+                                success.play();
                             } else {
                                 alert("Incorrect code. Safe remains locked.");
                             }
@@ -188,6 +192,7 @@
                 var el = this.el;
                 var door = el.querySelector('#door');
                 var GOTBook = el.querySelector('#GOTBook');
+                var success = document.getElementById('success');
 
                 // Click event listener on the book
                 GOTBook.addEventListener('click', function (event) {
@@ -196,6 +201,7 @@
                     GOTBook.setAttribute('visible', false);
                     el.sceneEl.setAttribute('key3Found', true);
                     key3Found = true;
+                    success.play();
                 });
             }
         });
@@ -220,6 +226,15 @@
 </head>
 
 <body>
+
+    <!-- background music -->
+    <embed src="cyber-town-simcity-style-music-22907.mp3" loop="true" autostart="true" hidden="true">
+
+    <!-- sound effect for when a key is found-->
+    <audio id="success" controls volume = "1">
+        <source src="success_bell-6776.mp3" type="audio/mp3">
+    </audio>
+
     <a-scene background="color: white">
         <a-entity environment="preset: forest; dressingAmount: 100"></a-entity>
 
