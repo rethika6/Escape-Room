@@ -228,11 +228,11 @@
 <body>
 
     <!-- background music -->
-    <audio src="cyber-town-simcity-style-music-22907.mp3" loop="true" autoplay="true" hidden="true"></audio>
+    <audio src="audio/cyber-town-simcity-style-music-22907.mp3" loop="true" autoplay="true" hidden="true"></audio>
 
     <!-- sound effect for when a key is found-->
     <audio id="success" controls volume = "1">
-        <source src="success_bell-6776.mp3" type="audio/mp3">
+        <source src="audio/success_bell-6776.mp3" type="audio/mp3">
     </audio>
 
     <a-scene background="color: white">
@@ -303,31 +303,31 @@
 
         <!-- Mona Lisa Painting on the wall -->
         <a-plane position="-7.88 3 .5" rotation="0 90 0" width="2" height="4" color="white"
-            src="Leonardo_da_Vinci_-_Mona_Lisa.jpg" rotate-on-click="paintingId: monaLisa">
+            src="Paintings/Leonardo_da_Vinci_-_Mona_Lisa.jpg" rotate-on-click="paintingId: monaLisa">
             <a-entity event-set__click="key1Found: true"></a-entity>
         </a-plane>
 
         <!-- Key on the wall -->
-        <a-plane position="-7.89 4.5 0" rotation="0 90 0" width="1" height=".5" src="newKey.png"></a-plane>
+        <a-plane position="-7.89 4.5 0" rotation="0 90 0" width="1" height=".5" src="Keys/newKey.png"></a-plane>
 
         <!-- Flower Painting on the wall -->
-        <a-plane position="-7.89 3 5" rotation="0 90 0" width="2" height="4" color="white" src="flowerpainting.jpg"
+        <a-plane position="-7.89 3 5" rotation="0 90 0" width="2" height="4" color="white" src="Paintings/flowerpainting.jpg"
             rotate-on-click></a-plane>
 
         <!-- Van Gogh Painting on the wall -->
         <a-plane position="-7.89 3 -4" rotation="0 90 0" width="2" height="4" color="white"
-            src="vangoghmuseum-s0016V1962-800.jpg" rotate-on-click></a-plane>
+            src="Paintings/vangoghmuseum-s0016V1962-800.jpg" rotate-on-click></a-plane>
 
         <!-- Monet painting above the bed -->
-        <a-plane position="0 3.2 7.88" rotation="0 180 0" width="3.8" height="2.8" color="white" src="monet-sunrise.jpg"
+        <a-plane position="0 3.2 7.88" rotation="0 180 0" width="3.8" height="2.8" color="white" src="Paintings/monet-sunrise.jpg"
             rotate-on-click></a-plane>
 
         <!-- Painting above the dresser -->
         <a-plane position="7.88 2.75 5.65" rotation="0 -90 0" width="3.2" height="2.2" color="white"
-            src="la_grande_jatte.jpg" rotate-on-click></a-plane>
+            src="Paintings/la_grande_jatte.jpg" rotate-on-click></a-plane>
 
         <!-- Starry Night painting above the desk -->
-        <a-plane position="7.88 2.75 0" rotation="0 -90 0" width="3.2" height="2.2" color="white" src="starry-night.jpg"
+        <a-plane position="7.88 2.75 0" rotation="0 -90 0" width="3.2" height="2.2" color="white" src="Paintings/starry-night.jpg"
             rotate-on-click></a-plane>
 
         <!-- Camera with wasd-controls -->
@@ -402,7 +402,7 @@
             <!-- inside -->
             <a-box position="3 0.75 6.55" width="1" height="1.5" depth=".2" color="black"></a-box>
             <!-- key inside safe -->
-            <a-plane position="3 1 6.4" rotation="180 0 90" width="1" height=".5" src="key.png"></a-plane>
+            <a-plane position="3 1 6.4" rotation="180 0 90" width="1" height=".5" src="Keys/key.png"></a-plane>
 
             <!-- safe door -->
             <a-box id="safeDoor" position="3 .75 6.4" width="1.5" height="2" depth=".1" color="gray"></a-box>
@@ -504,7 +504,7 @@
              <!-- Bottom of bookshelf -->
              <a-box position="-4 0.1 -7.7" rotation="0 90 0" width="0.5" height="0.2" depth="1.3" color="#8B4513"></a-box>
             <!-- Game of Thrones Book -->
-            <a-image id="GOTBook" src="gameOfThronesBook.jpeg" position="-4 1.3 -7.7" rotation="0 0 0" width="0.3"
+            <a-image id="GOTBook" src="Books/gameOfThronesBook.jpeg" position="-4 1.3 -7.7" rotation="0 0 0" width="0.3"
                 height="0.5">
 
                 <a-entity event-set__click="key3Found: true"></a-entity>
@@ -512,17 +512,17 @@
             </a-image>
 
             <!-- Other Books -->
-            <a-box  src="percyJackson.jpeg" position="-4.4 1.28 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="catchingFire.jpg" position="-4.4 0.44 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="normalPeople.jpeg" position="-4.4 1.28 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="weWereLiars.jpg" position="-3.6 0.44 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="1984.jpeg" position="-4.4 2.18 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="animalFarm.jpg" position="-3.6 1.28 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="shadowAndBone.jpg" position="-4 2.18 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="faultInOurStars.jpg" position="-4 0.44 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
-            <a-box  src="sixOfCrows.jpg" position="-3.6 2.18 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/percyJackson.jpeg" position="-4.4 1.28 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/catchingFire.jpg" position="-4.4 0.44 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/normalPeople.jpeg" position="-4.4 1.28 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/weWereLiars.jpg" position="-3.6 0.44 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/1984.jpeg" position="-4.4 2.18 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/animalFarm.jpg" position="-3.6 1.28 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/shadowAndBone.jpg" position="-4 2.18 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/faultInOurStars.jpg" position="-4 0.44 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
+            <a-box  src="Books/sixOfCrows.jpg" position="-3.6 2.18 -7.7" rotation="0 180 0" width="0.3" depth="0" height="0.45"></a-box>
 
-            <a-plane position="-4 1.3 -7.7" rotation="0 0 0" width=".3" height=".5" src="bookshelfKey.png"></a-plane>
+            <a-plane position="-4 1.3 -7.7" rotation="0 0 0" width=".3" height=".5" src="Keys/bookshelfKey.png"></a-plane>
 
             <!-- Door -->
             <a-box id="door" position="0 0.3 -7.99" rotation="0 0 0" scale="1.5 4.5 0.2" color="#6E260E"
